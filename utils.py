@@ -1,12 +1,18 @@
+from calendar import c
 import json
 import os
 import subprocess
 import tkinter
-from tkinter.ttk import Separator
+from tkinter.ttk import Separator, Progressbar, Style
 
 import tkmacosx
 
 import cfg
+
+
+def on_exit():
+    cfg.FLAG = False
+    cfg.ROOT.destroy()
 
 
 def place_center(top_level):
@@ -40,6 +46,7 @@ class MyButton(tkinter.Label):
         Binds tkinter label to mouse left click.
         * param `cmd`: lambda e: some_function()
         """
+        self.unbind('<Button-1')
         self.bind('<Button-1>', cmd)
 
     def press(self):
@@ -75,7 +82,7 @@ class SearchDublicats():
 
         scrollable = tkmacosx.SFrame(
             cfg.ROOT, bg=cfg.BGSEARCH, scrollbarwidth=10)
-        scrollable.pack(fill=tkinter.BOTH, expand=1)
+        scrollable.pack(fill=tkinter.BOTH, expand=1, pady=(15, 0))
 
         if type(cfg.FILE_PATH) != str or len(cfg.FILE_PATH) == 0:
             self.no_file(scrollable, 'Выберите файл')
@@ -92,7 +99,12 @@ class SearchDublicats():
             config = json.load(file)
 
         for root, _, files in os.walk(config['search_path']):
+            cfg.DYNAMIC['text'] = root
             for file in files:
+
+                if not cfg.FLAG:
+                    return
+
                 path = os.path.join(root, file)
                 get = os.stat(path)
                 props = (

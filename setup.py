@@ -39,7 +39,7 @@ setup(
 
 
 parent = os.path.dirname(__file__)
-LIB = '/Users/evlosh/Downloads/MiuzDublicats/lib'
+LIB = '/Users/Loshkarev/Documents/Разное/Projects/files/lib'
 pasteHere = os.path.join(os.path.dirname(__file__), 'dist',
                         f'{cfg.APP_NAME}.app', 'Contents', 'lib')
 

@@ -78,6 +78,13 @@ class WhatSearch(MyFrame):
         Globals.file_widget.pack(padx=(15, 0), side=tkinter.LEFT)
 
 
+class Dynamic(MyLabel):
+    def __init__(self, master):
+        MyLabel.__init__(self, master)
+        cfg.DYNAMIC = self
+        self.configure(anchor=tkinter.W, justify=tkinter.LEFT, padx=30)
+
+
 class StartBtn(MyButton):
     def __init__(self, master):
         MyButton.__init__(self, master, text='Старт')
@@ -85,7 +92,10 @@ class StartBtn(MyButton):
 
     def btn_cmd(self):
         self.press()
-        self['text'] = 'Ищу'
+        cfg.FLAG = True
+
+        self['text'] = 'Стоп'
+        self.cmd(lambda e: self.stop_search())
 
         t1 = threading.Thread(target=SearchDublicats)
         t1.start()
@@ -94,3 +104,8 @@ class StartBtn(MyButton):
             cfg.ROOT.update()
 
         self['text'] = 'Старт'
+        self.cmd(lambda e: self.btn_cmd())
+
+    def stop_search(self):
+        cfg.FLAG = False
+        cfg.DYNAMIC['text'] = ''

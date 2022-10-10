@@ -5,7 +5,7 @@ import tkinter
 import tkmacosx
 
 APP_NAME = 'MiuzDublicats'
-APP_VER = '1.0.2'
+APP_VER = '1.0.3'
 
 FONTCOLOR = "#E2E2E2"
 BGCOLOR = "#222222"
@@ -16,8 +16,10 @@ BGSEARCH = '#1C1C1C'
 ROOT = tkinter.Tk()
 ROOT.withdraw()
 SCROLLABLE = tkmacosx.SFrame(ROOT, bg=BGSEARCH, scrollbarwidth=10)
+DYNAMIC = tkinter.Label
 
 FILE_PATH = str
+FLAG = False
 
 CFG_FOLDER = os.path.join(
     os.path.expanduser('~'), 'Library', 'Application Support', APP_NAME)
